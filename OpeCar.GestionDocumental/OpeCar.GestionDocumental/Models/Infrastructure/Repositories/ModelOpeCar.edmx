@@ -1,0 +1,790 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="OpeCarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2008" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdArea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdTipoArea" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="AreaHist">
+          <Key>
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdArea" Type="int" Nullable="false" />
+          <Property Name="IdHistorial" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="UrlImg" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="IdDocumento" />
+          </Key>
+          <Property Name="IdDocumento" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdSubArea" Type="int" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="DocumentoHist">
+          <Key>
+            <PropertyRef Name="IdDocumento" />
+            <PropertyRef Name="IdHistorico" />
+          </Key>
+          <Property Name="IdDocumento" Type="int" Nullable="false" />
+          <Property Name="IdHistorico" Type="int" Nullable="false" />
+          <Property Name="NombreDocumento" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="UrlDocumento" Type="nvarchar" MaxLength="150" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="FechaModificaciom" Type="datetime" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubArea">
+          <Key>
+            <PropertyRef Name="IdSubArea" />
+          </Key>
+          <Property Name="IdSubArea" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="IdArea" Type="int" Nullable="false" />
+          <Property Name="IdPadre" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="SubAreaHist">
+          <Key>
+            <PropertyRef Name="IdSubArea" />
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdSubArea" Type="int" Nullable="false" />
+          <Property Name="IdHistorial" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="EsUltimo" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoArea">
+          <Key>
+            <PropertyRef Name="IdTipoArea" />
+          </Key>
+          <Property Name="IdTipoArea" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDocumento" />
+          </Key>
+          <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
+          <Property Name="Descripción" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="NombreCompleto" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+        </EntityType>
+        <Association Name="FK_Area_TipoArea">
+          <End Role="TipoArea" Type="Self.TipoArea" Multiplicity="1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoArea">
+              <PropertyRef Name="IdTipoArea" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="IdTipoArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AreaHist_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="AreaHist" Type="Self.AreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="AreaHist">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AreaHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="AreaHist" Type="Self.AreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="AreaHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoHist_Documento">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="1" />
+          <End Role="DocumentoHist" Type="Self.DocumentoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDocumento" />
+            </Principal>
+            <Dependent Role="DocumentoHist">
+              <PropertyRef Name="IdDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="DocumentoHist" Type="Self.DocumentoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubArea_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="SubArea">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubArea_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="SubArea1" Type="Self.SubArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="SubArea1">
+              <PropertyRef Name="IdPadre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubAreaHist_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="SubAreaHist" Type="Self.SubAreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="SubAreaHist">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubAreaHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SubAreaHist" Type="Self.SubAreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="SubAreaHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario1" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuario1">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OpeCarModelStoreContainer">
+          <EntitySet Name="Area" EntityType="Self.Area" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="AreaHist" EntityType="Self.AreaHist" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="DocumentoHist" EntityType="Self.DocumentoHist" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="SubArea" EntityType="Self.SubArea" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="SubAreaHist" EntityType="Self.SubAreaHist" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="TipoArea" EntityType="Self.TipoArea" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="seguridad" store:Type="Tables" />
+          <AssociationSet Name="FK_Area_TipoArea" Association="Self.FK_Area_TipoArea">
+            <End Role="TipoArea" EntitySet="TipoArea" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaHist_Area" Association="Self.FK_AreaHist_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="AreaHist" EntitySet="AreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaHist_Usuario" Association="Self.FK_AreaHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AreaHist" EntitySet="AreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_SubArea" Association="Self.FK_Documento_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_TipoDocumento" Association="Self.FK_Documento_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_Usuario" Association="Self.FK_Documento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoHist_Documento" Association="Self.FK_DocumentoHist_Documento">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoHist_Usuario" Association="Self.FK_DocumentoHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubArea_Area" Association="Self.FK_SubArea_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="SubArea" EntitySet="SubArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubArea_SubArea" Association="Self.FK_SubArea_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="SubArea1" EntitySet="SubArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubAreaHist_SubArea" Association="Self.FK_SubAreaHist_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="SubAreaHist" EntitySet="SubAreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubAreaHist_Usuario" Association="Self.FK_SubAreaHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SubAreaHist" EntitySet="SubAreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Usuario" Association="Self.FK_Usuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Usuario1" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="OpeCarModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="Area">
+          <Key>
+            <PropertyRef Name="IdArea" />
+          </Key>
+          <Property Name="IdArea" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoArea" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" />
+          <NavigationProperty Name="TipoArea" Relationship="Self.FK_Area_TipoArea" FromRole="Area" ToRole="TipoArea" />
+          <NavigationProperty Name="AreaHist" Relationship="Self.FK_AreaHist_Area" FromRole="Area" ToRole="AreaHist" />
+          <NavigationProperty Name="SubArea" Relationship="Self.FK_SubArea_Area" FromRole="Area" ToRole="SubArea" />
+        </EntityType>
+        <EntityType Name="AreaHist">
+          <Key>
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdArea" Type="Int32" Nullable="false" />
+          <Property Name="IdHistorial" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UrlImg" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_AreaHist_Area" FromRole="AreaHist" ToRole="Area" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_AreaHist_Usuario" FromRole="AreaHist" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Documento">
+          <Key>
+            <PropertyRef Name="IdDocumento" />
+          </Key>
+          <Property Name="IdDocumento" Type="Int32" Nullable="false" />
+          <Property Name="IdSubArea" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="SubArea" Relationship="Self.FK_Documento_SubArea" FromRole="Documento" ToRole="SubArea" />
+          <NavigationProperty Name="TipoDocumento" Relationship="Self.FK_Documento_TipoDocumento" FromRole="Documento" ToRole="TipoDocumento" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_Documento_Usuario" FromRole="Documento" ToRole="Usuario" />
+          <NavigationProperty Name="DocumentoHist" Relationship="Self.FK_DocumentoHist_Documento" FromRole="Documento" ToRole="DocumentoHist" />
+        </EntityType>
+        <EntityType Name="DocumentoHist">
+          <Key>
+            <PropertyRef Name="IdDocumento" />
+            <PropertyRef Name="IdHistorico" />
+          </Key>
+          <Property Name="IdDocumento" Type="Int32" Nullable="false" />
+          <Property Name="IdHistorico" Type="Int32" Nullable="false" />
+          <Property Name="NombreDocumento" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="UrlDocumento" Type="String" MaxLength="150" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="Int32" />
+          <Property Name="FechaModificaciom" Type="DateTime" Precision="3" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK_DocumentoHist_Documento" FromRole="DocumentoHist" ToRole="Documento" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_DocumentoHist_Usuario" FromRole="DocumentoHist" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="SubArea">
+          <Key>
+            <PropertyRef Name="IdSubArea" />
+          </Key>
+          <Property Name="IdSubArea" Type="Int32" Nullable="false" />
+          <Property Name="IdArea" Type="Int32" Nullable="false" />
+          <Property Name="IdPadre" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_SubArea_Area" FromRole="SubArea" ToRole="Area" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK_Documento_SubArea" FromRole="SubArea" ToRole="Documento" />
+          <NavigationProperty Name="SubArea1" Relationship="Self.FK_SubArea_SubArea" FromRole="SubArea" ToRole="SubArea1" />
+          <NavigationProperty Name="SubArea2" Relationship="Self.FK_SubArea_SubArea" FromRole="SubArea1" ToRole="SubArea" />
+          <NavigationProperty Name="SubAreaHist" Relationship="Self.FK_SubAreaHist_SubArea" FromRole="SubArea" ToRole="SubAreaHist" />
+        </EntityType>
+        <EntityType Name="SubAreaHist">
+          <Key>
+            <PropertyRef Name="IdSubArea" />
+            <PropertyRef Name="IdHistorial" />
+          </Key>
+          <Property Name="IdSubArea" Type="Int32" Nullable="false" />
+          <Property Name="IdHistorial" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="EsUltimo" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="SubArea" Relationship="Self.FK_SubAreaHist_SubArea" FromRole="SubAreaHist" ToRole="SubArea" />
+          <NavigationProperty Name="Usuario" Relationship="Self.FK_SubAreaHist_Usuario" FromRole="SubAreaHist" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="TipoArea">
+          <Key>
+            <PropertyRef Name="IdTipoArea" />
+          </Key>
+          <Property Name="IdTipoArea" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Area" Relationship="Self.FK_Area_TipoArea" FromRole="TipoArea" ToRole="Area" />
+        </EntityType>
+        <EntityType Name="TipoDocumento">
+          <Key>
+            <PropertyRef Name="IdTipoDocumento" />
+          </Key>
+          <Property Name="IdTipoDocumento" Type="Int32" Nullable="false" />
+          <Property Name="Descripción" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK_Documento_TipoDocumento" FromRole="TipoDocumento" ToRole="Documento" />
+        </EntityType>
+        <EntityType Name="Usuario">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="Usuario1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="NombreCompleto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="AreaHist" Relationship="Self.FK_AreaHist_Usuario" FromRole="Usuario" ToRole="AreaHist" />
+          <NavigationProperty Name="Documento" Relationship="Self.FK_Documento_Usuario" FromRole="Usuario" ToRole="Documento" />
+          <NavigationProperty Name="DocumentoHist" Relationship="Self.FK_DocumentoHist_Usuario" FromRole="Usuario" ToRole="DocumentoHist" />
+          <NavigationProperty Name="SubAreaHist" Relationship="Self.FK_SubAreaHist_Usuario" FromRole="Usuario" ToRole="SubAreaHist" />
+          <NavigationProperty Name="Usuario11" Relationship="Self.FK_Usuario_Usuario" FromRole="Usuario" ToRole="Usuario1" />
+          <NavigationProperty Name="Usuario2" Relationship="Self.FK_Usuario_Usuario" FromRole="Usuario1" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Area_TipoArea">
+          <End Role="TipoArea" Type="Self.TipoArea" Multiplicity="1" />
+          <End Role="Area" Type="Self.Area" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoArea">
+              <PropertyRef Name="IdTipoArea" />
+            </Principal>
+            <Dependent Role="Area">
+              <PropertyRef Name="IdTipoArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AreaHist_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="AreaHist" Type="Self.AreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="AreaHist">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubArea_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="SubArea">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_AreaHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="AreaHist" Type="Self.AreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="AreaHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_TipoDocumento">
+          <End Role="TipoDocumento" Type="Self.TipoDocumento" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Documento" Type="Self.Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoHist_Documento">
+          <End Role="Documento" Type="Self.Documento" Multiplicity="1" />
+          <End Role="DocumentoHist" Type="Self.DocumentoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Documento">
+              <PropertyRef Name="IdDocumento" />
+            </Principal>
+            <Dependent Role="DocumentoHist">
+              <PropertyRef Name="IdDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_DocumentoHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="DocumentoHist" Type="Self.DocumentoHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="DocumentoHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubArea_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="SubArea1" Type="Self.SubArea" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="SubArea1">
+              <PropertyRef Name="IdPadre" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubAreaHist_SubArea">
+          <End Role="SubArea" Type="Self.SubArea" Multiplicity="1" />
+          <End Role="SubAreaHist" Type="Self.SubAreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="SubArea">
+              <PropertyRef Name="IdSubArea" />
+            </Principal>
+            <Dependent Role="SubAreaHist">
+              <PropertyRef Name="IdSubArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_SubAreaHist_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="SubAreaHist" Type="Self.SubAreaHist" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="SubAreaHist">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Usuario_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Usuario1" Type="Self.Usuario" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Usuario1">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <EntityContainer Name="OpeCarEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="Area" EntityType="Self.Area" />
+          <EntitySet Name="AreaHist" EntityType="Self.AreaHist" />
+          <EntitySet Name="Documento" EntityType="Self.Documento" />
+          <EntitySet Name="DocumentoHist" EntityType="Self.DocumentoHist" />
+          <EntitySet Name="SubArea" EntityType="Self.SubArea" />
+          <EntitySet Name="SubAreaHist" EntityType="Self.SubAreaHist" />
+          <EntitySet Name="TipoArea" EntityType="Self.TipoArea" />
+          <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" />
+          <EntitySet Name="Usuario" EntityType="Self.Usuario" />
+          <AssociationSet Name="FK_Area_TipoArea" Association="Self.FK_Area_TipoArea">
+            <End Role="TipoArea" EntitySet="TipoArea" />
+            <End Role="Area" EntitySet="Area" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaHist_Area" Association="Self.FK_AreaHist_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="AreaHist" EntitySet="AreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubArea_Area" Association="Self.FK_SubArea_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="SubArea" EntitySet="SubArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_AreaHist_Usuario" Association="Self.FK_AreaHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="AreaHist" EntitySet="AreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_SubArea" Association="Self.FK_Documento_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_TipoDocumento" Association="Self.FK_Documento_TipoDocumento">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Documento_Usuario" Association="Self.FK_Documento_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoHist_Documento" Association="Self.FK_DocumentoHist_Documento">
+            <End Role="Documento" EntitySet="Documento" />
+            <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_DocumentoHist_Usuario" Association="Self.FK_DocumentoHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubArea_SubArea" Association="Self.FK_SubArea_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="SubArea1" EntitySet="SubArea" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubAreaHist_SubArea" Association="Self.FK_SubAreaHist_SubArea">
+            <End Role="SubArea" EntitySet="SubArea" />
+            <End Role="SubAreaHist" EntitySet="SubAreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_SubAreaHist_Usuario" Association="Self.FK_SubAreaHist_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="SubAreaHist" EntitySet="SubAreaHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Usuario_Usuario" Association="Self.FK_Usuario_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Usuario1" EntitySet="Usuario" />
+          </AssociationSet>
+        </EntityContainer>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+      <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+        <EntityContainerMapping StorageEntityContainer="OpeCarModelStoreContainer" CdmEntityContainer="OpeCarEntities">
+          <EntitySetMapping Name="Area">
+            <EntityTypeMapping TypeName="OpeCarModel.Area">
+              <MappingFragment StoreEntitySet="Area">
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdTipoArea" ColumnName="IdTipoArea" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="AreaHist">
+            <EntityTypeMapping TypeName="OpeCarModel.AreaHist">
+              <MappingFragment StoreEntitySet="AreaHist">
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="UrlImg" ColumnName="UrlImg" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Documento">
+            <EntityTypeMapping TypeName="OpeCarModel.Documento">
+              <MappingFragment StoreEntitySet="Documento">
+                <ScalarProperty Name="IdDocumento" ColumnName="IdDocumento" />
+                <ScalarProperty Name="IdSubArea" ColumnName="IdSubArea" />
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="DocumentoHist">
+            <EntityTypeMapping TypeName="OpeCarModel.DocumentoHist">
+              <MappingFragment StoreEntitySet="DocumentoHist">
+                <ScalarProperty Name="IdDocumento" ColumnName="IdDocumento" />
+                <ScalarProperty Name="IdHistorico" ColumnName="IdHistorico" />
+                <ScalarProperty Name="NombreDocumento" ColumnName="NombreDocumento" />
+                <ScalarProperty Name="UrlDocumento" ColumnName="UrlDocumento" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaModificaciom" ColumnName="FechaModificaciom" />
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubArea">
+            <EntityTypeMapping TypeName="OpeCarModel.SubArea">
+              <MappingFragment StoreEntitySet="SubArea">
+                <ScalarProperty Name="IdSubArea" ColumnName="IdSubArea" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdPadre" ColumnName="IdPadre" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="SubAreaHist">
+            <EntityTypeMapping TypeName="OpeCarModel.SubAreaHist">
+              <MappingFragment StoreEntitySet="SubAreaHist">
+                <ScalarProperty Name="IdSubArea" ColumnName="IdSubArea" />
+                <ScalarProperty Name="IdHistorial" ColumnName="IdHistorial" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="EsUltimo" ColumnName="EsUltimo" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoArea">
+            <EntityTypeMapping TypeName="OpeCarModel.TipoArea">
+              <MappingFragment StoreEntitySet="TipoArea">
+                <ScalarProperty Name="IdTipoArea" ColumnName="IdTipoArea" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoDocumento">
+            <EntityTypeMapping TypeName="OpeCarModel.TipoDocumento">
+              <MappingFragment StoreEntitySet="TipoDocumento">
+                <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
+                <ScalarProperty Name="Descripción" ColumnName="Descripción" />
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Usuario">
+            <EntityTypeMapping TypeName="OpeCarModel.Usuario">
+              <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+                <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
+                <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+        </EntityContainerMapping>
+      </Mapping>
+    </edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="true" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
