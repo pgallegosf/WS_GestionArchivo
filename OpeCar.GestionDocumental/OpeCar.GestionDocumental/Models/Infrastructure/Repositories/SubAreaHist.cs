@@ -22,7 +22,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public Nullable<System.DateTime> FechaModificacion { get; set; }
         public bool IndicadorHabilitado { get; set; }
     
-        public virtual SubArea SubArea { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual SubArea SubArea { get; set; }
     }
 }

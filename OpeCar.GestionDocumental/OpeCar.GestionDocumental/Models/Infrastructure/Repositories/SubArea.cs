@@ -16,21 +16,21 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
     {
         public SubArea()
         {
-            this.Documento = new HashSet<Documento>();
             this.SubArea1 = new HashSet<SubArea>();
             this.SubAreaHist = new HashSet<SubAreaHist>();
+            this.Documento = new HashSet<Documento>();
         }
     
         public int IdSubArea { get; set; }
         public int IdArea { get; set; }
-        public int IdPadre { get; set; }
+        public Nullable<int> IdPadre { get; set; }
         public int IdUsuarioCreacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
     
-        public virtual Area Area { get; set; }
-        public virtual ICollection<Documento> Documento { get; set; }
         public virtual ICollection<SubArea> SubArea1 { get; set; }
         public virtual SubArea SubArea2 { get; set; }
         public virtual ICollection<SubAreaHist> SubAreaHist { get; set; }
+        public virtual Area Area { get; set; }
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }

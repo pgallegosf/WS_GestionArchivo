@@ -19,10 +19,10 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public string NombreDocumento { get; set; }
         public string UrlDocumento { get; set; }
         public Nullable<int> IdUsuarioModificacion { get; set; }
-        public Nullable<System.DateTime> FechaModificaciom { get; set; }
         public bool IndicadorHabilitado { get; set; }
+        public Nullable<System.DateTime> FechaModificacion { get; set; }
     
-        public virtual Documento Documento { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public virtual Documento Documento { get; set; }
     }
 }

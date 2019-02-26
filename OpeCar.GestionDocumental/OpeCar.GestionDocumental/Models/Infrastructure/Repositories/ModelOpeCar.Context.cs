@@ -25,14 +25,14 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
             throw new UnintentionalCodeFirstException();
         }
     
-        public DbSet<Area> Area { get; set; }
         public DbSet<AreaHist> AreaHist { get; set; }
-        public DbSet<Documento> Documento { get; set; }
         public DbSet<DocumentoHist> DocumentoHist { get; set; }
-        public DbSet<SubArea> SubArea { get; set; }
         public DbSet<SubAreaHist> SubAreaHist { get; set; }
         public DbSet<TipoArea> TipoArea { get; set; }
         public DbSet<TipoDocumento> TipoDocumento { get; set; }
         public DbSet<Usuario> Usuario { get; set; }
+        public DbSet<SubArea> SubArea { get; set; }
+        public DbSet<Area> Area { get; set; }
+        public DbSet<Documento> Documento { get; set; }
     }
 }

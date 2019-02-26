@@ -117,10 +117,18 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="App_Start\WebApiConfig.cs" />
     <Compile Include="Controllers\AreaController.cs" />
+    <Compile Include="Controllers\DocumentoController.cs" />
+    <Compile Include="Controllers\SubAreaController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Entities\Base.cs" />
     <Compile Include="Models\Entities\EArea.cs" />
+    <Compile Include="Models\Entities\EAreaRequest.cs" />
+    <Compile Include="Models\Entities\EDocumento.cs" />
+    <Compile Include="Models\Entities\EDocumentoRequest.cs" />
+    <Compile Include="Models\Entities\ESubArea.cs" />
+    <Compile Include="Models\Entities\ESubAreaRequest.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Area.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
@@ -128,12 +136,14 @@
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Infrastructure\Repositories\DArea.cs" />
+    <Compile Include="Models\Infrastructure\Repositories\DDocumento.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Documento.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Infrastructure\Repositories\DocumentoHist.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
+    <Compile Include="Models\Infrastructure\Repositories\DSubArea.cs" />
     <Compile Include="Models\Infrastructure\Repositories\ModelOpeCar.Context.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
@@ -176,6 +186,7 @@
     <Content Include="Models\Infrastructure\Repositories\ModelOpeCar.edmx.diagram">
       <DependentUpon>ModelOpeCar.edmx</DependentUpon>
     </Content>
+    <None Include="Properties\PublishProfiles\GestionDocumental.pubxml" />
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>

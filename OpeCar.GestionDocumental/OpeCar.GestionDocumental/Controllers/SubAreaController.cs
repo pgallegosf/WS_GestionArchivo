@@ -9,21 +9,21 @@ using OpeCar.GestionDocumental.Models.Infrastructure.Repositories;
 
 namespace OpeCar.GestionDocumental.Controllers
 {
-    public class AreaController : ApiController
+    public class SubAreaController : ApiController
     {
         [HttpGet]
-        [Route("api/Area/Listar/{idTipo}")]
-        public IHttpActionResult Listar(int idTipo)
+        [Route("api/SubArea/Listar/{idArea}")]
+        public IHttpActionResult Listar(int idArea)
         {
-            var resul = DArea.Listar(idTipo);
+            var resul = DSubArea.Listar(idArea);
             return Ok(resul);
         }
 
         [HttpPost]
-        [Route("api/Area/Registrar")]
-        public IHttpActionResult Registrar([FromBody] EAreaRequest request)
+        [Route("api/SubArea/Registrar")]
+        public IHttpActionResult Registrar([FromBody] ESubAreaRequest request)
         {
-            var resul = DArea.Registrar(request);
+            var resul = DSubArea.Registrar(request);
             return Ok(resul);
         }
     }
