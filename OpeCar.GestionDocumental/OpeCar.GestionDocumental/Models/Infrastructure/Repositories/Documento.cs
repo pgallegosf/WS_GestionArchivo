@@ -29,5 +29,6 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public virtual TipoDocumento TipoDocumento { get; set; }
         public virtual Usuario Usuario { get; set; }
         public virtual ICollection<DocumentoHist> DocumentoHist { get; set; }
+        public virtual TipoDocumento TipoDocumento1 { get; set; }
     }
 }

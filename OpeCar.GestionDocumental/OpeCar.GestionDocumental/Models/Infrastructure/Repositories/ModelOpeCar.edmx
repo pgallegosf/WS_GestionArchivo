@@ -154,7 +154,7 @@
               <PropertyRef Name="IdTipoDocumento" />
             </Principal>
             <Dependent Role="Documento">
-              <PropertyRef Name="IdSubArea" />
+              <PropertyRef Name="IdTipoDocumento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -382,6 +382,7 @@
           <Property Name="Descripción" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
           <NavigationProperty Name="Documento" Relationship="OpeCarModel.FK_Documento_TipoDocumento" FromRole="TipoDocumento" ToRole="Documento" />
+          <NavigationProperty Name="Documento1" Relationship="OpeCarModel.FK_Documento_TipoDocumento1" FromRole="TipoDocumento" ToRole="Documento" />
         </EntityType>
         <EntityType Name="Usuario">
           <Key>
@@ -509,6 +510,10 @@
             <End Role="Documento" EntitySet="Documento" />
             <End Role="DocumentoHist" EntitySet="DocumentoHist" />
           </AssociationSet>
+          <AssociationSet Name="FK_Documento_TipoDocumento1" Association="OpeCarModel.FK_Documento_TipoDocumento1">
+            <End Role="TipoDocumento" EntitySet="TipoDocumento" />
+            <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubArea">
           <Key>
@@ -574,6 +579,7 @@
           <NavigationProperty Name="TipoDocumento" Relationship="OpeCarModel.FK_Documento_TipoDocumento" FromRole="Documento" ToRole="TipoDocumento" />
           <NavigationProperty Name="Usuario" Relationship="OpeCarModel.FK_Documento_Usuario" FromRole="Documento" ToRole="Usuario" />
           <NavigationProperty Name="DocumentoHist" Relationship="OpeCarModel.FK_DocumentoHist_Documento" FromRole="Documento" ToRole="DocumentoHist" />
+          <NavigationProperty Name="TipoDocumento1" Relationship="OpeCarModel.FK_Documento_TipoDocumento1" FromRole="Documento" ToRole="TipoDocumento" />
         </EntityType>
         <Association Name="FK_Area_TipoArea">
           <End Type="OpeCarModel.TipoArea" Role="TipoArea" Multiplicity="1" />
@@ -656,6 +662,18 @@
             </Principal>
             <Dependent Role="DocumentoHist">
               <PropertyRef Name="IdDocumento" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Documento_TipoDocumento1">
+          <End Type="OpeCarModel.TipoDocumento" Role="TipoDocumento" Multiplicity="1" />
+          <End Type="OpeCarModel.Documento" Role="Documento" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoDocumento">
+              <PropertyRef Name="IdTipoDocumento" />
+            </Principal>
+            <Dependent Role="Documento">
+              <PropertyRef Name="IdTipoDocumento" />
             </Dependent>
           </ReferentialConstraint>
         </Association>

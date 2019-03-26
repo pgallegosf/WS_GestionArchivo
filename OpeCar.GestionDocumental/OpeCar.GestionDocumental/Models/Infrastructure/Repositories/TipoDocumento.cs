@@ -17,6 +17,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public TipoDocumento()
         {
             this.Documento = new HashSet<Documento>();
+            this.Documento1 = new HashSet<Documento>();
         }
     
         public int IdTipoDocumento { get; set; }
@@ -24,5 +25,6 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public bool IndicadorHabilitado { get; set; }
     
         public virtual ICollection<Documento> Documento { get; set; }
+        public virtual ICollection<Documento> Documento1 { get; set; }
     }
 }

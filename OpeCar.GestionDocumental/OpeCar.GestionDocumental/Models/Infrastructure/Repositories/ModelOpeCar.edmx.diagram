@@ -27,6 +27,7 @@
         <AssociationConnector Association="OpeCarModel.FK_Documento_TipoDocumento" />
         <AssociationConnector Association="OpeCarModel.FK_Documento_Usuario" />
         <AssociationConnector Association="OpeCarModel.FK_DocumentoHist_Documento" />
+        <AssociationConnector Association="OpeCarModel.FK_Documento_TipoDocumento1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

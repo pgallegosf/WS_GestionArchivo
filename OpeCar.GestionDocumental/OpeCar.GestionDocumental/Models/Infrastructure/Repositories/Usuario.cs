@@ -17,10 +17,10 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public Usuario()
         {
             this.AreaHist = new HashSet<AreaHist>();
-            this.Documento = new HashSet<Documento>();
             this.DocumentoHist = new HashSet<DocumentoHist>();
             this.SubAreaHist = new HashSet<SubAreaHist>();
             this.Usuario11 = new HashSet<Usuario>();
+            this.Documento = new HashSet<Documento>();
         }
     
         public int IdUsuario { get; set; }
@@ -30,10 +30,10 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public int IdUsuarioCreacion { get; set; }
     
         public virtual ICollection<AreaHist> AreaHist { get; set; }
-        public virtual ICollection<Documento> Documento { get; set; }
         public virtual ICollection<DocumentoHist> DocumentoHist { get; set; }
         public virtual ICollection<SubAreaHist> SubAreaHist { get; set; }
         public virtual ICollection<Usuario> Usuario11 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
+        public virtual ICollection<Documento> Documento { get; set; }
     }
 }
