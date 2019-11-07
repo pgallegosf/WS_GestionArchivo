@@ -26,5 +26,12 @@ namespace OpeCar.GestionDocumental.Controllers
             var resul = DDocumento.Registrar(request);
             return Ok(resul);
         }
+        [HttpGet]
+        [Route("api/Documento/Eliminar/{idDocumento}")]
+        public IHttpActionResult Eliminar(int idDocumento)
+        {
+            var resul = DDocumento.Eliminar(idDocumento);
+            return Ok(resul);
+        }
     }
 }

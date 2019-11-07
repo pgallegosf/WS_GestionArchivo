@@ -28,6 +28,12 @@
         <AssociationConnector Association="OpeCarModel.FK_Documento_Usuario" />
         <AssociationConnector Association="OpeCarModel.FK_DocumentoHist_Documento" />
         <AssociationConnector Association="OpeCarModel.FK_Documento_TipoDocumento1" />
+        <EntityTypeShape EntityType="OpeCarModel.TipoSeccion" Width="1.5" PointX="8.375" PointY="9.875" />
+        <EntityTypeShape EntityType="OpeCarModel.Seccion" Width="1.5" PointX="11.625" PointY="6.25" />
+        <EntityTypeShape EntityType="OpeCarModel.Enlace" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_TipoSeccion" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario1" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>

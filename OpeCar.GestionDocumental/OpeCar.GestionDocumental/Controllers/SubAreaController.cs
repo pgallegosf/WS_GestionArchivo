@@ -26,5 +26,19 @@ namespace OpeCar.GestionDocumental.Controllers
             var resul = DSubArea.Registrar(request);
             return Ok(resul);
         }
+        [HttpPost]
+        [Route("api/SubArea/Eliminar")]
+        public IHttpActionResult Eliminar([FromBody] ESubAreaRequest request)
+        {
+            var resul = DSubArea.Eliminar(request);
+            return Ok(resul);
+        }
+        [HttpPost]
+        [Route("api/SubArea/Editar")]
+        public IHttpActionResult Editar([FromBody] ESubAreaRequest request)
+        {
+            var resul = DSubArea.Editar(request);
+            return Ok(resul);
+        }
     }
 }

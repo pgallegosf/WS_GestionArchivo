@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Web.Helpers;
 using OpeCar.GestionDocumental.Models.Entities;
 
 namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
@@ -22,7 +23,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                                      on d.IdSubArea equals s.IdSubArea
                                  orderby dh.IdHistorico descending
                                  where (s.IdArea == idArea
-                                 && dh.IndicadorHabilitado
+                                 //&& dh.IndicadorHabilitado
                                  && dh.IdHistorico == db.DocumentoHist.Where(x => x.IdDocumento == d.IdDocumento).Max(x => x.IdHistorico))
                                  select new
                                  {
@@ -36,7 +37,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                                  });
 
                     {
-                        foreach (var item in query)
+                        foreach (var item in query.Where(x=>x.IndicadorHabilitado))
                         {
                             var result = new EDocumento
                             {
@@ -59,7 +60,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                 }
 
             }
-            return lista;
+            return lista.OrderBy(x=>x.Descripcion);
         }
         public static bool Registrar(EDocumentoRequest request)
         {
@@ -123,6 +124,28 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                         db.DocumentoHist.Add(documentoHistNew);
                     }
                     db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                    return false;
+                }
+
+            }
+        }
+        public static bool Eliminar(int idDocumento)
+        {
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var idHistorico = db.DocumentoHist.Where(x => x.IdDocumento == idDocumento).Select(x => x.IdHistorico).Max();
+                    var documento=db.DocumentoHist.FirstOrDefault(x => x.IdDocumento == idDocumento && x.IdHistorico==idHistorico);
+                    documento.IndicadorHabilitado = false;
+                    db.SaveChanges();
+                    
                     return true;
                 }
                 catch (Exception ex)

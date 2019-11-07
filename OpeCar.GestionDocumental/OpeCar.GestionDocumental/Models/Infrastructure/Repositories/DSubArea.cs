@@ -61,7 +61,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                 }
 
             }
-            return lista;
+            return lista.OrderBy(x=>x.Descripcion);
         }
         public static bool Registrar(ESubAreaRequest request)
         {
@@ -130,6 +130,76 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                         db.SubAreaHist.Add(subAreaHistNew);
                     }
                     db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                    return false;
+                }
+
+            }
+        }
+        public static bool Eliminar(ESubAreaRequest request)
+        {
+
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var idHistorico = db.SubAreaHist.Where(x => x.IdSubArea == request.Codigo).Select(x => x.IdHistorial).Max();
+                    var subArea = db.SubAreaHist.FirstOrDefault(x => x.IdSubArea == request.Codigo && x.IdHistorial == idHistorico);
+                    if (subArea != null)
+                    {
+                        subArea.IndicadorHabilitado = false;
+                        subArea.IdUsuarioModificacion = request.IdUsuario;
+                        subArea.FechaModificacion = DateTime.Now;
+                    }
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                    return false;
+                }
+
+            }
+        }
+        public static bool Editar(ESubAreaRequest request)
+        {
+
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var idHistorico = db.SubAreaHist.Where(x => x.IdSubArea == request.Codigo).Select(x => x.IdHistorial).Max();
+                    var subArea = db.SubAreaHist.FirstOrDefault(x => x.IdSubArea == request.Codigo && x.IdHistorial == idHistorico);
+                    if (subArea != null)
+                    {
+                        subArea.IndicadorHabilitado = false;
+                        subArea.IdUsuarioModificacion = request.IdUsuario;
+                        subArea.FechaModificacion = request.FechaTransaccion;
+                    }
+                    idHistorico+=1;
+                    var subAreaHist = new SubAreaHist
+                    {
+
+                        IdSubArea = (int)request.Codigo,
+                        IdHistorial = idHistorico,
+                        Descripcion = request.Descripcion,
+                        FechaModificacion = request.FechaTransaccion,
+                        IdUsuarioModificacion = request.IdUsuario,
+                        EsUltimo = subArea.EsUltimo,
+                        IndicadorHabilitado = true
+                    };
+                    db.SubAreaHist.Add(subAreaHist);
+                    db.SaveChanges();
+
                     return true;
                 }
                 catch (Exception ex)

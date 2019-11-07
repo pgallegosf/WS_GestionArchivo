@@ -55,7 +55,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                 }
 
             }
-            return lista;
+            return lista.OrderBy(x=>x.Descripcion);
         }
         public static bool Registrar(EAreaRequest request)
         {
@@ -118,6 +118,76 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                         db.AreaHist.Add(areaHistNew);
                     }
                     db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                    return false;
+                }
+
+            }
+        }
+        public static bool Eliminar(EAreaRequest request)
+        {
+
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var idHistorico = db.AreaHist.Where(x => x.IdArea == request.Codigo).Select(x => x.IdHistorial).Max();
+                    var area = db.AreaHist.FirstOrDefault(x => x.IdArea == request.Codigo && x.IdHistorial == idHistorico);
+                    if (area != null)
+                    {
+                        area.IndicadorHabilitado = false;
+                        area.IdUsuarioModificacion = request.IdUsuario;
+                        area.FechaModificacion = DateTime.Now;
+                    }
+
+                    db.SaveChanges();
+
+                    return true;
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                    return false;
+                }
+
+            }
+    }
+        public static bool Editar(EAreaRequest request)
+        {
+
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var idHistorico = db.AreaHist.Where(x => x.IdArea == request.Codigo).Select(x => x.IdHistorial).Max();
+                    var area = db.AreaHist.FirstOrDefault(x => x.IdArea == request.Codigo && x.IdHistorial == idHistorico);
+                    if (area != null)
+                    {
+                        area.IndicadorHabilitado = false;
+                        area.IdUsuarioModificacion = request.IdUsuario;
+                        area.FechaModificacion = request.FechaTransaccion;
+                    }
+                    idHistorico+=1;
+                    var areaHist = new AreaHist
+                    {
+
+                        IdArea = (int)request.Codigo,
+                        IdHistorial = idHistorico,
+                        Descripcion = request.Descripcion,
+                        FechaModificacion = request.FechaTransaccion,
+                        IdUsuarioModificacion = request.IdUsuario,
+                        UrlImg = area.UrlImg,
+                        IndicadorHabilitado = true
+                    };
+                    db.AreaHist.Add(areaHist);
+                    db.SaveChanges();
+
                     return true;
                 }
                 catch (Exception ex)

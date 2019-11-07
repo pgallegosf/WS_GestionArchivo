@@ -34,5 +34,8 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public DbSet<SubArea> SubArea { get; set; }
         public DbSet<Area> Area { get; set; }
         public DbSet<Documento> Documento { get; set; }
+        public DbSet<TipoSeccion> TipoSeccion { get; set; }
+        public DbSet<Seccion> Seccion { get; set; }
+        public DbSet<Enlace> Enlace { get; set; }
     }
 }

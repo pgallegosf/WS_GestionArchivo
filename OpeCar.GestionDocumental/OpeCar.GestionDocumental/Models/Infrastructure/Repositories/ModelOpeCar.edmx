@@ -5,6 +5,30 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OpeCarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="IdSeccion" />
+            <PropertyRef Name="IdTipoSeccion" />
+          </Key>
+          <Property Name="IdSeccion" Type="int" Nullable="false" />
+          <Property Name="IdTipoSeccion" Type="smallint" Nullable="false" />
+          <Property Name="Titulo" Type="varchar" MaxLength="200" Nullable="false" />
+          <Property Name="Contenido" Type="text" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+          <Property Name="RutaMultimedia" Type="nvarchar" MaxLength="200" />
+          <Property Name="Posicion" Type="int" Nullable="false" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+        </EntityType>
+        <EntityType Name="TipoSeccion">
+          <Key>
+            <PropertyRef Name="IdTipoSeccion" />
+          </Key>
+          <Property Name="IdTipoSeccion" Type="smallint" Nullable="false" />
+          <Property Name="Descripcion" Type="varchar" MaxLength="50" Nullable="false" />
+        </EntityType>
         <EntityType Name="Area">
           <Key>
             <PropertyRef Name="IdArea" />
@@ -88,15 +112,30 @@
           <Property Name="Descripción" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
         </EntityType>
+        <EntityType Name="Enlace">
+          <Key>
+            <PropertyRef Name="IdEnlace" />
+          </Key>
+          <Property Name="IdEnlace" Type="int" Nullable="false" />
+          <Property Name="Descripcion" Type="nvarchar" MaxLength="80" Nullable="false" />
+          <Property Name="UrlEnlace" Type="nvarchar" MaxLength="100" Nullable="false" />
+          <Property Name="ImgEnlace" Type="nvarchar" MaxLength="100" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="FechaModificacion" Type="datetime" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
           <Property Name="IdUsuario" Type="int" Nullable="false" />
-          <Property Name="Usuario" Type="nvarchar" MaxLength="20" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NombreCompleto" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
           <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="IndicadorSistema" Type="bit" />
         </EntityType>
         <Association Name="FK_Area_TipoArea">
           <End Role="TipoArea" Type="Self.TipoArea" Multiplicity="1" />
@@ -194,6 +233,42 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_Seccion_TipoSeccion">
+          <End Role="TipoSeccion" Type="Self.TipoSeccion" Multiplicity="1" />
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSeccion">
+              <PropertyRef Name="IdTipoSeccion" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdTipoSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seccion_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seccion_Usuario1">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
+          <End Role="Seccion" Type="Self.Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_SubArea_Area">
           <End Role="Area" Type="Self.Area" Multiplicity="1" />
           <End Role="SubArea" Type="Self.SubArea" Multiplicity="*" />
@@ -255,6 +330,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OpeCarModelStoreContainer">
+          <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TipoSeccion" EntityType="Self.TipoSeccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Area" EntityType="Self.Area" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="AreaHist" EntityType="Self.AreaHist" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="Documento" EntityType="Self.Documento" Schema="gDocumental" store:Type="Tables" />
@@ -263,6 +340,7 @@
           <EntitySet Name="SubAreaHist" EntityType="Self.SubAreaHist" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="TipoArea" EntityType="Self.TipoArea" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="gDocumental" store:Type="Tables" />
+          <EntitySet Name="Enlace" EntityType="Self.Enlace" Schema="generalidades" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="seguridad" store:Type="Tables" />
           <AssociationSet Name="FK_Area_TipoArea" Association="Self.FK_Area_TipoArea">
             <End Role="TipoArea" EntitySet="TipoArea" />
@@ -295,6 +373,18 @@
           <AssociationSet Name="FK_DocumentoHist_Usuario" Association="Self.FK_DocumentoHist_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seccion_TipoSeccion" Association="Self.FK_Seccion_TipoSeccion">
+            <End Role="TipoSeccion" EntitySet="TipoSeccion" />
+            <End Role="Seccion" EntitySet="Seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seccion_Usuario" Association="Self.FK_Seccion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seccion" EntitySet="Seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seccion_Usuario1" Association="Self.FK_Seccion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seccion" EntitySet="Seccion" />
           </AssociationSet>
           <AssociationSet Name="FK_SubArea_Area" Association="Self.FK_SubArea_Area">
             <End Role="Area" EntitySet="Area" />
@@ -389,7 +479,7 @@
             <PropertyRef Name="IdUsuario" />
           </Key>
           <Property Name="IdUsuario" Type="Int32" Nullable="false" />
-          <Property Name="Usuario1" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="Usuario1" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="NombreCompleto" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
           <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
@@ -399,7 +489,10 @@
           <NavigationProperty Name="Usuario11" Relationship="Self.FK_Usuario_Usuario" FromRole="Usuario" ToRole="Usuario1" />
           <NavigationProperty Name="Usuario2" Relationship="Self.FK_Usuario_Usuario" FromRole="Usuario1" ToRole="Usuario" />
           <NavigationProperty Name="Documento" Relationship="OpeCarModel.FK_Documento_Usuario" FromRole="Usuario" ToRole="Documento" />
-        </EntityType>
+          <Property Name="IndicadorSistema" Type="Boolean" />
+          <NavigationProperty Name="Seccion" Relationship="OpeCarModel.FK_Seccion_Usuario" FromRole="Usuario" ToRole="Seccion" />
+          <NavigationProperty Name="Seccion1" Relationship="OpeCarModel.FK_Seccion_Usuario1" FromRole="Usuario" ToRole="Seccion" />
+          </EntityType>
         <Association Name="FK_AreaHist_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
           <End Role="AreaHist" Type="Self.AreaHist" Multiplicity="*" />
@@ -513,6 +606,21 @@
           <AssociationSet Name="FK_Documento_TipoDocumento1" Association="OpeCarModel.FK_Documento_TipoDocumento1">
             <End Role="TipoDocumento" EntitySet="TipoDocumento" />
             <End Role="Documento" EntitySet="Documento" />
+          </AssociationSet>
+          <EntitySet Name="TipoSeccion" EntityType="OpeCarModel.TipoSeccion" />
+          <EntitySet Name="Seccion" EntityType="OpeCarModel.Seccion" />
+          <EntitySet Name="Enlace" EntityType="OpeCarModel.Enlace" />
+          <AssociationSet Name="FK_Seccion_TipoSeccion" Association="OpeCarModel.FK_Seccion_TipoSeccion">
+            <End Role="TipoSeccion" EntitySet="TipoSeccion" />
+            <End Role="Seccion" EntitySet="Seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seccion_Usuario" Association="OpeCarModel.FK_Seccion_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seccion" EntitySet="Seccion" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Seccion_Usuario1" Association="OpeCarModel.FK_Seccion_Usuario1">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Seccion" EntitySet="Seccion" />
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubArea">
@@ -677,6 +785,84 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="TipoSeccion">
+          <Key>
+            <PropertyRef Name="IdTipoSeccion" />
+          </Key>
+          <Property Name="IdTipoSeccion" Type="Int16" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <NavigationProperty Name="Seccion" Relationship="OpeCarModel.FK_Seccion_TipoSeccion" FromRole="TipoSeccion" ToRole="Seccion" />
+        </EntityType>
+        <EntityType Name="Seccion">
+          <Key>
+            <PropertyRef Name="IdSeccion" />
+            <PropertyRef Name="IdTipoSeccion" />
+          </Key>
+          <Property Name="IdSeccion" Type="Int32" Nullable="false" />
+          <Property Name="IdTipoSeccion" Type="Int16" Nullable="false" />
+          <Property Name="Titulo" Type="String" Nullable="false" MaxLength="200" FixedLength="false" Unicode="false" />
+          <Property Name="Contenido" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IdUsuarioModificacion" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+          <Property Name="RutaMultimedia" Type="String" MaxLength="200" FixedLength="false" Unicode="true" />
+          <Property Name="Posicion" Type="Int32" Nullable="false" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="TipoSeccion" Relationship="OpeCarModel.FK_Seccion_TipoSeccion" FromRole="Seccion" ToRole="TipoSeccion" />
+          <NavigationProperty Name="Usuario" Relationship="OpeCarModel.FK_Seccion_Usuario" FromRole="Seccion" ToRole="Usuario" />
+          <NavigationProperty Name="Usuario1" Relationship="OpeCarModel.FK_Seccion_Usuario1" FromRole="Seccion" ToRole="Usuario" />
+        </EntityType>
+        <EntityType Name="Enlace">
+          <Key>
+            <PropertyRef Name="IdEnlace" />
+          </Key>
+          <Property Name="IdEnlace" Type="Int32" Nullable="false" />
+          <Property Name="Descripcion" Type="String" Nullable="false" MaxLength="80" FixedLength="false" Unicode="true" />
+          <Property Name="UrlEnlace" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="ImgEnlace" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="IndicadorHabilitado" Type="Boolean" Nullable="false" />
+          <Property Name="IdUsuarioModificacion" Type="Int32" />
+          <Property Name="FechaModificacion" Type="DateTime" Precision="3" />
+        </EntityType>
+        <Association Name="FK_Seccion_TipoSeccion">
+          <End Type="OpeCarModel.TipoSeccion" Role="TipoSeccion" Multiplicity="1" />
+          <End Type="OpeCarModel.Seccion" Role="Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="TipoSeccion">
+              <PropertyRef Name="IdTipoSeccion" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdTipoSeccion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seccion_Usuario">
+          <End Type="OpeCarModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="OpeCarModel.Seccion" Role="Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdUsuarioCreacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Seccion_Usuario1">
+          <End Type="OpeCarModel.Usuario" Role="Usuario" Multiplicity="0..1" />
+          <End Type="OpeCarModel.Seccion" Role="Seccion" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Seccion">
+              <PropertyRef Name="IdUsuarioModificacion" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -742,6 +928,7 @@
           <EntitySetMapping Name="Usuario">
             <EntityTypeMapping TypeName="OpeCarModel.Usuario">
               <MappingFragment StoreEntitySet="Usuario">
+                <ScalarProperty Name="IndicadorSistema" ColumnName="IndicadorSistema" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
                 <ScalarProperty Name="Usuario1" ColumnName="Usuario" />
                 <ScalarProperty Name="NombreCompleto" ColumnName="NombreCompleto" />
@@ -779,6 +966,46 @@
                 <ScalarProperty Name="IdTipoDocumento" ColumnName="IdTipoDocumento" />
                 <ScalarProperty Name="IdSubArea" ColumnName="IdSubArea" />
                 <ScalarProperty Name="IdDocumento" ColumnName="IdDocumento" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="TipoSeccion">
+            <EntityTypeMapping TypeName="OpeCarModel.TipoSeccion">
+              <MappingFragment StoreEntitySet="TipoSeccion">
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdTipoSeccion" ColumnName="IdTipoSeccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Seccion">
+            <EntityTypeMapping TypeName="OpeCarModel.Seccion">
+              <MappingFragment StoreEntitySet="Seccion">
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+                <ScalarProperty Name="Posicion" ColumnName="Posicion" />
+                <ScalarProperty Name="RutaMultimedia" ColumnName="RutaMultimedia" />
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="Contenido" ColumnName="Contenido" />
+                <ScalarProperty Name="Titulo" ColumnName="Titulo" />
+                <ScalarProperty Name="IdTipoSeccion" ColumnName="IdTipoSeccion" />
+                <ScalarProperty Name="IdSeccion" ColumnName="IdSeccion" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Enlace">
+            <EntityTypeMapping TypeName="OpeCarModel.Enlace">
+              <MappingFragment StoreEntitySet="Enlace">
+                <ScalarProperty Name="FechaModificacion" ColumnName="FechaModificacion" />
+                <ScalarProperty Name="IdUsuarioModificacion" ColumnName="IdUsuarioModificacion" />
+                <ScalarProperty Name="IndicadorHabilitado" ColumnName="IndicadorHabilitado" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="ImgEnlace" ColumnName="ImgEnlace" />
+                <ScalarProperty Name="UrlEnlace" ColumnName="UrlEnlace" />
+                <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
+                <ScalarProperty Name="IdEnlace" ColumnName="IdEnlace" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

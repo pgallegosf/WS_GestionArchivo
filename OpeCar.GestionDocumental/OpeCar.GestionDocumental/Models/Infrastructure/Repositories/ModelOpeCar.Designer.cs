@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'D:\POOL\GIT\Servicios\WS_GestionArchivo\OpeCar.GestionDocumental\OpeCar.GestionDocumental\Models\Infrastructure\Repositories\ModelOpeCar.edmx'. 
+﻿// T4 code generation is enabled for model 'D:\PROYECTOS\ALEATICA\GIT\Servicios\WS_GestionArchivo\OpeCar.GestionDocumental\OpeCar.GestionDocumental\Models\Infrastructure\Repositories\ModelOpeCar.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

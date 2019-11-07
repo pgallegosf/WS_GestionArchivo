@@ -21,6 +21,8 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
             this.SubAreaHist = new HashSet<SubAreaHist>();
             this.Usuario11 = new HashSet<Usuario>();
             this.Documento = new HashSet<Documento>();
+            this.Seccion = new HashSet<Seccion>();
+            this.Seccion1 = new HashSet<Seccion>();
         }
     
         public int IdUsuario { get; set; }
@@ -28,6 +30,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public string NombreCompleto { get; set; }
         public System.DateTime FechaCreacion { get; set; }
         public int IdUsuarioCreacion { get; set; }
+        public Nullable<bool> IndicadorSistema { get; set; }
     
         public virtual ICollection<AreaHist> AreaHist { get; set; }
         public virtual ICollection<DocumentoHist> DocumentoHist { get; set; }
@@ -35,5 +38,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public virtual ICollection<Usuario> Usuario11 { get; set; }
         public virtual Usuario Usuario2 { get; set; }
         public virtual ICollection<Documento> Documento { get; set; }
+        public virtual ICollection<Seccion> Seccion { get; set; }
+        public virtual ICollection<Seccion> Seccion1 { get; set; }
     }
 }
