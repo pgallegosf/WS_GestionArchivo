@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="2a79d8e6ed324903b86ef45b177565a5" Name="Diagram1">
+        <EntityTypeShape EntityType="OpeCarModel.AreaHist" Width="1.5" PointX="3" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpeCarModel.DocumentoHist" Width="2" PointX="8.25" PointY="4.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpeCarModel.SubAreaHist" Width="1.5" PointX="3" PointY="0.75" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpeCarModel.TipoArea" Width="1.5" PointX="1.5" PointY="16.5" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpeCarModel.TipoDocumento" Width="1.5" PointX="3.75" PointY="9.25" IsExpanded="true" />
+        <EntityTypeShape EntityType="OpeCarModel.Usuario" Width="1.5" PointX="0.75" PointY="4.625" IsExpanded="true" />
+        <AssociationConnector Association="OpeCarModel.FK_AreaHist_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="OpeCarModel.FK_DocumentoHist_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="OpeCarModel.FK_SubAreaHist_Usuario" ManuallyRouted="false" />
+        <AssociationConnector Association="OpeCarModel.FK_Usuario_Usuario" ManuallyRouted="false" />
+        <EntityTypeShape EntityType="OpeCarModel.SubArea" Width="1.5" PointX="3.75" PointY="12.875" />
+        <AssociationConnector Association="OpeCarModel.FK_SubArea_SubArea" />
+        <AssociationConnector Association="OpeCarModel.FK_SubAreaHist_SubArea" />
+        <EntityTypeShape EntityType="OpeCarModel.Area" Width="1.5" PointX="3.75" PointY="17.125" />
+        <EntityTypeShape EntityType="OpeCarModel.Documento" Width="1.5" PointX="6" PointY="8.875" />
+        <AssociationConnector Association="OpeCarModel.FK_Area_TipoArea" />
+        <AssociationConnector Association="OpeCarModel.FK_AreaHist_Area" />
+        <AssociationConnector Association="OpeCarModel.FK_SubArea_Area" />
+        <AssociationConnector Association="OpeCarModel.FK_Documento_SubArea" />
+        <AssociationConnector Association="OpeCarModel.FK_Documento_TipoDocumento" />
+        <AssociationConnector Association="OpeCarModel.FK_Documento_Usuario" />
+        <AssociationConnector Association="OpeCarModel.FK_DocumentoHist_Documento" />
+        <AssociationConnector Association="OpeCarModel.FK_Documento_TipoDocumento1" />
+        <EntityTypeShape EntityType="OpeCarModel.TipoSeccion" Width="1.5" PointX="8.375" PointY="9.875" />
+        <EntityTypeShape EntityType="OpeCarModel.Seccion" Width="1.5" PointX="11.625" PointY="6.25" />
+        <EntityTypeShape EntityType="OpeCarModel.Enlace" Width="1.5" PointX="5.375" PointY="0.75" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_TipoSeccion" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario" />
+        <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario1" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
