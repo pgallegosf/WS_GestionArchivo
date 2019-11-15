@@ -14,9 +14,9 @@
           <Property Name="IdTipoSeccion" Type="smallint" Nullable="false" />
           <Property Name="Titulo" Type="varchar" MaxLength="200" Nullable="false" />
           <Property Name="Contenido" Type="text" />
-          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="bigint" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
-          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="IdUsuarioModificacion" Type="bigint" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="RutaMultimedia" Type="nvarchar" MaxLength="200" />
           <Property Name="Posicion" Type="int" Nullable="false" />
@@ -47,7 +47,7 @@
           <Property Name="IdHistorial" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="UrlImg" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="IdUsuarioModificacion" Type="bigint" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
         </EntityType>
@@ -58,7 +58,7 @@
           <Property Name="IdDocumento" Type="int" Nullable="false" />
           <Property Name="IdSubArea" Type="int" Nullable="false" />
           <Property Name="IdTipoDocumento" Type="int" Nullable="false" />
-          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="bigint" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
         </EntityType>
         <EntityType Name="DocumentoHist">
@@ -70,7 +70,7 @@
           <Property Name="IdHistorico" Type="int" Nullable="false" />
           <Property Name="NombreDocumento" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="UrlDocumento" Type="nvarchar" MaxLength="150" Nullable="false" />
-          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="IdUsuarioModificacion" Type="bigint" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
         </EntityType>
@@ -93,7 +93,7 @@
           <Property Name="IdHistorial" Type="int" Nullable="false" />
           <Property Name="Descripcion" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="EsUltimo" Type="bit" Nullable="false" />
-          <Property Name="IdUsuarioModificacion" Type="int" />
+          <Property Name="IdUsuarioModificacion" Type="bigint" />
           <Property Name="FechaModificacion" Type="datetime" />
           <Property Name="IndicadorHabilitado" Type="bit" Nullable="false" />
         </EntityType>
@@ -130,11 +130,11 @@
           <Key>
             <PropertyRef Name="IdUsuario" />
           </Key>
-          <Property Name="IdUsuario" Type="int" Nullable="false" />
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
           <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="NombreCompleto" Type="nvarchar" MaxLength="100" Nullable="false" />
           <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
-          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="bigint" Nullable="false" />
           <Property Name="IndicadorSistema" Type="bit" />
         </EntityType>
         <Association Name="FK_Area_TipoArea">
