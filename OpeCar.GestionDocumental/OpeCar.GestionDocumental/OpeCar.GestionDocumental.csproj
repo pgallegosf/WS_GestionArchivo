@@ -19,6 +19,8 @@
     <IISExpressAnonymousAuthentication />
     <IISExpressWindowsAuthentication />
     <IISExpressUseClassicPipelineMode />
+    <Use64BitIISExpress />
+    <UseGlobalApplicationHostFile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -122,6 +124,7 @@
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\EnlaceController.cs" />
+    <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\SubAreaController.cs" />
     <Compile Include="Global.asax.cs">
@@ -134,6 +137,8 @@
     <Compile Include="Models\Entities\EDocumentoRequest.cs" />
     <Compile Include="Models\Entities\EEnlace.cs" />
     <Compile Include="Models\Entities\EEnlaceRequest.cs" />
+    <Compile Include="Models\Entities\EMantenimiento.cs" />
+    <Compile Include="Models\Entities\EMenuFooter.cs" />
     <Compile Include="Models\Entities\ESeccion.cs" />
     <Compile Include="Models\Entities\ESeccionRequest.cs" />
     <Compile Include="Models\Entities\ESubArea.cs" />
@@ -147,6 +152,8 @@
     <Compile Include="Models\Infrastructure\Repositories\DArea.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DDocumento.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DEnlace.cs" />
+    <Compile Include="Models\Infrastructure\Repositories\DMantenimiento.cs" />
+    <Compile Include="Models\Infrastructure\Repositories\DMenuFooter.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Documento.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
@@ -156,6 +163,12 @@
     <Compile Include="Models\Infrastructure\Repositories\DSeccion.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DSubArea.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Enlace.cs">
+      <DependentUpon>ModelOpeCar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Infrastructure\Repositories\Mantenimiento.cs">
+      <DependentUpon>ModelOpeCar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Infrastructure\Repositories\MenuFooter.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Infrastructure\Repositories\ModelOpeCar.Context.cs">
@@ -216,6 +229,7 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
+    <Folder Include="Views\Mantenimiento\" />
   </ItemGroup>
   <ItemGroup>
     <Service Include="{508349B6-6B84-4DF5-91F0-309BEEBAD82D}" />
