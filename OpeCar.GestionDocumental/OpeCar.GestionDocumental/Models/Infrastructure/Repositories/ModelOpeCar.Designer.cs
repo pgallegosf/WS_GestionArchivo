@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 ﻿// La generación de código T4 está habilitada para el modelo 'D:\LABORAL\TRABAJOS\FREELANCE\INGENIERÍA\PROYECTOS\OPE_CAR\REP_DOC_V1.1\WS_GestionArchivo\OpeCar.GestionDocumental\OpeCar.GestionDocumental\Models\Infrastructure\Repositories\ModelOpeCar.edmx'. 
+=======
+﻿// La generación de código T4 está habilitada para el modelo 'C:\EXJSANC8\Extra\SourceCode\WS_GestionArchivo\OpeCar.GestionDocumental\OpeCar.GestionDocumental\Models\Infrastructure\Repositories\ModelOpeCar.edmx'. 
+>>>>>>> 2eacbfce878474cb030d778f64ad79888945357b
 // Para habilitar la generación de código heredada, cambie el valor de la propiedad del diseñador 'Estrategia de generación de código'
 // por 'ObjectContext heredado'. Esta propiedad está disponible en la ventana Propiedades cuando se abre
 // el modelo en el diseñador.

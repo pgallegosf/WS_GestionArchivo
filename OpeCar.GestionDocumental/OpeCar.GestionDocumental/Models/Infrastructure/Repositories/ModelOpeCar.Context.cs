@@ -37,5 +37,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public DbSet<TipoSeccion> TipoSeccion { get; set; }
         public DbSet<Seccion> Seccion { get; set; }
         public DbSet<Enlace> Enlace { get; set; }
+        public DbSet<Mantenimiento> Mantenimiento { get; set; }
+        public DbSet<MenuFooter> MenuFooter { get; set; }
     }
 }

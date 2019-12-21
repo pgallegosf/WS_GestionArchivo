@@ -5,6 +5,30 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OpeCarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Mantenimiento">
+          <Key>
+            <PropertyRef Name="MantenimientoId" />
+          </Key>
+          <Property Name="MantenimientoId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MantenimientoLogo" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="MantenimientoTelefono" Type="varchar" MaxLength="500" />
+          <Property Name="MantenimientoMenuFooter" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="MantenimientoSobreNosotros" Type="varchar" MaxLength="500" Nullable="false" />
+          <Property Name="MantenimientoDerechosReservados" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MantenimientoFechaActualizacion" Type="datetime" Nullable="false" />
+        </EntityType>
+        <EntityType Name="MenuFooter">
+          <Key>
+            <PropertyRef Name="MenuFooterId" />
+          </Key>
+          <Property Name="MenuFooterId" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="MantenimientoId" Type="int" Nullable="false" />
+          <Property Name="MenuFooterName" Type="varchar" MaxLength="50" Nullable="false" />
+          <Property Name="MenuFooterUrl" Type="varchar" MaxLength="100" Nullable="false" />
+          <Property Name="MenuFooterPosition" Type="int" Nullable="false" />
+          <Property Name="MenuFooterIsSuperAdmin" Type="bit" Nullable="false" />
+          <Property Name="MenuFooterStatus" Type="bit" Nullable="false" />
+        </EntityType>
         <EntityType Name="Seccion">
           <Key>
             <PropertyRef Name="IdSeccion" />
@@ -233,6 +257,20 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_MenuFooter_Mantenimiento">
+          <End Role="Mantenimiento" Type="Self.Mantenimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Role="MenuFooter" Type="Self.MenuFooter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mantenimiento">
+              <PropertyRef Name="MantenimientoId" />
+            </Principal>
+            <Dependent Role="MenuFooter">
+              <PropertyRef Name="MantenimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Seccion_TipoSeccion">
           <End Role="TipoSeccion" Type="Self.TipoSeccion" Multiplicity="1" />
           <End Role="Seccion" Type="Self.Seccion" Multiplicity="*" />
@@ -330,6 +368,8 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OpeCarModelStoreContainer">
+          <EntitySet Name="Mantenimiento" EntityType="Self.Mantenimiento" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="MenuFooter" EntityType="Self.MenuFooter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="TipoSeccion" EntityType="Self.TipoSeccion" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Area" EntityType="Self.Area" Schema="gDocumental" store:Type="Tables" />
@@ -373,6 +413,10 @@
           <AssociationSet Name="FK_DocumentoHist_Usuario" Association="Self.FK_DocumentoHist_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoHist" EntitySet="DocumentoHist" />
+          </AssociationSet>
+          <AssociationSet Name="FK_MenuFooter_Mantenimiento" Association="Self.FK_MenuFooter_Mantenimiento">
+            <End Role="Mantenimiento" EntitySet="Mantenimiento" />
+            <End Role="MenuFooter" EntitySet="MenuFooter" />
           </AssociationSet>
           <AssociationSet Name="FK_Seccion_TipoSeccion" Association="Self.FK_Seccion_TipoSeccion">
             <End Role="TipoSeccion" EntitySet="TipoSeccion" />
@@ -622,6 +666,12 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Seccion" EntitySet="Seccion" />
           </AssociationSet>
+          <EntitySet Name="Mantenimiento" EntityType="OpeCarModel.Mantenimiento" />
+          <EntitySet Name="MenuFooter" EntityType="OpeCarModel.MenuFooter" />
+          <AssociationSet Name="FK_MenuFooter_Mantenimiento" Association="OpeCarModel.FK_MenuFooter_Mantenimiento">
+            <End Role="Mantenimiento" EntitySet="Mantenimiento" />
+            <End Role="MenuFooter" EntitySet="MenuFooter" />
+          </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubArea">
           <Key>
@@ -863,6 +913,46 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Mantenimiento">
+          <Key>
+            <PropertyRef Name="MantenimientoId" />
+          </Key>
+          <Property Name="MantenimientoId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MantenimientoLogo" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MantenimientoTelefono" Type="String" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MantenimientoMenuFooter" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MantenimientoSobreNosotros" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="false" />
+          <Property Name="MantenimientoDerechosReservados" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MantenimientoFechaActualizacion" Type="DateTime" Nullable="false" Precision="3" />
+          <NavigationProperty Name="MenuFooter" Relationship="OpeCarModel.FK_MenuFooter_Mantenimiento" FromRole="Mantenimiento" ToRole="MenuFooter" />
+        </EntityType>
+        <EntityType Name="MenuFooter">
+          <Key>
+            <PropertyRef Name="MenuFooterId" />
+          </Key>
+          <Property Name="MenuFooterId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="MantenimientoId" Type="Int32" Nullable="false" />
+          <Property Name="MenuFooterName" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="false" />
+          <Property Name="MenuFooterUrl" Type="String" Nullable="false" MaxLength="100" FixedLength="false" Unicode="false" />
+          <Property Name="MenuFooterPosition" Type="Int32" Nullable="false" />
+          <Property Name="MenuFooterIsSuperAdmin" Type="Boolean" Nullable="false" />
+          <Property Name="MenuFooterStatus" Type="Boolean" Nullable="false" />
+          <NavigationProperty Name="Mantenimiento" Relationship="OpeCarModel.FK_MenuFooter_Mantenimiento" FromRole="MenuFooter" ToRole="Mantenimiento" />
+        </EntityType>
+        <Association Name="FK_MenuFooter_Mantenimiento">
+          <End Type="OpeCarModel.Mantenimiento" Role="Mantenimiento" Multiplicity="1">
+            <OnDelete Action="Cascade" />
+          </End>
+          <End Type="OpeCarModel.MenuFooter" Role="MenuFooter" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Mantenimiento">
+              <PropertyRef Name="MantenimientoId" />
+            </Principal>
+            <Dependent Role="MenuFooter">
+              <PropertyRef Name="MantenimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1006,6 +1096,32 @@
                 <ScalarProperty Name="UrlEnlace" ColumnName="UrlEnlace" />
                 <ScalarProperty Name="Descripcion" ColumnName="Descripcion" />
                 <ScalarProperty Name="IdEnlace" ColumnName="IdEnlace" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Mantenimiento">
+            <EntityTypeMapping TypeName="OpeCarModel.Mantenimiento">
+              <MappingFragment StoreEntitySet="Mantenimiento">
+                <ScalarProperty Name="MantenimientoFechaActualizacion" ColumnName="MantenimientoFechaActualizacion" />
+                <ScalarProperty Name="MantenimientoDerechosReservados" ColumnName="MantenimientoDerechosReservados" />
+                <ScalarProperty Name="MantenimientoSobreNosotros" ColumnName="MantenimientoSobreNosotros" />
+                <ScalarProperty Name="MantenimientoMenuFooter" ColumnName="MantenimientoMenuFooter" />
+                <ScalarProperty Name="MantenimientoTelefono" ColumnName="MantenimientoTelefono" />
+                <ScalarProperty Name="MantenimientoLogo" ColumnName="MantenimientoLogo" />
+                <ScalarProperty Name="MantenimientoId" ColumnName="MantenimientoId" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="MenuFooter">
+            <EntityTypeMapping TypeName="OpeCarModel.MenuFooter">
+              <MappingFragment StoreEntitySet="MenuFooter">
+                <ScalarProperty Name="MenuFooterStatus" ColumnName="MenuFooterStatus" />
+                <ScalarProperty Name="MenuFooterIsSuperAdmin" ColumnName="MenuFooterIsSuperAdmin" />
+                <ScalarProperty Name="MenuFooterPosition" ColumnName="MenuFooterPosition" />
+                <ScalarProperty Name="MenuFooterUrl" ColumnName="MenuFooterUrl" />
+                <ScalarProperty Name="MenuFooterName" ColumnName="MenuFooterName" />
+                <ScalarProperty Name="MantenimientoId" ColumnName="MantenimientoId" />
+                <ScalarProperty Name="MenuFooterId" ColumnName="MenuFooterId" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

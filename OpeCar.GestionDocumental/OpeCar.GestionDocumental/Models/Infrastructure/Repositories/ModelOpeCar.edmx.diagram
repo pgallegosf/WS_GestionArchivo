@@ -34,6 +34,9 @@
         <AssociationConnector Association="OpeCarModel.FK_Seccion_TipoSeccion" />
         <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario" />
         <AssociationConnector Association="OpeCarModel.FK_Seccion_Usuario1" />
+        <EntityTypeShape EntityType="OpeCarModel.Mantenimiento" Width="1.5" PointX="7.375" PointY="1" />
+        <EntityTypeShape EntityType="OpeCarModel.MenuFooter" Width="1.5" PointX="9.625" PointY="1" />
+        <AssociationConnector Association="OpeCarModel.FK_MenuFooter_Mantenimiento" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
