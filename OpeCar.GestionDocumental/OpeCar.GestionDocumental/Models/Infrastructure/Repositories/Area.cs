@@ -18,6 +18,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         {
             this.AreaHist = new HashSet<AreaHist>();
             this.SubArea = new HashSet<SubArea>();
+            this.Permiso = new HashSet<Permiso>();
         }
     
         public int IdArea { get; set; }
@@ -28,5 +29,6 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public virtual TipoArea TipoArea { get; set; }
         public virtual ICollection<AreaHist> AreaHist { get; set; }
         public virtual ICollection<SubArea> SubArea { get; set; }
+        public virtual ICollection<Permiso> Permiso { get; set; }
     }
 }

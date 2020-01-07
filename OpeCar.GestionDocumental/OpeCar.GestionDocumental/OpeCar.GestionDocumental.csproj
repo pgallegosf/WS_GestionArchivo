@@ -186,6 +186,9 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>ModelOpeCar.edmx</DependentUpon>
     </Compile>
+    <Compile Include="Models\Infrastructure\Repositories\Permiso.cs">
+      <DependentUpon>ModelOpeCar.tt</DependentUpon>
+    </Compile>
     <Compile Include="Models\Infrastructure\Repositories\Seccion.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>

@@ -12,10 +12,10 @@ namespace OpeCar.GestionDocumental.Controllers
     public class AreaController : ApiController
     {
         [HttpGet]
-        [Route("api/Area/Listar/{idTipo}")]
-        public IHttpActionResult Listar(int idTipo)
+        [Route("api/Area/Listar/{idUsuario}/{idTipo}")]
+        public IHttpActionResult Listar(int? idUsuario,int idTipo)
         {
-            var resul = DArea.Listar(idTipo);
+            var resul = DArea.Listar(idUsuario,idTipo);
             return Ok(resul);
         }
 
