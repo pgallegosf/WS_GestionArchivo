@@ -12,23 +12,19 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
     using System;
     using System.Collections.Generic;
     
-    public partial class Area
+    public partial class Permiso
     {
-        public Area()
-        {
-            this.AreaHist = new HashSet<AreaHist>();
-            this.SubArea = new HashSet<SubArea>();
-            this.Permiso = new HashSet<Permiso>();
-        }
-    
+        public int IdUsuario { get; set; }
+        public byte IdRol { get; set; }
         public int IdArea { get; set; }
-        public int IdTipoArea { get; set; }
+        public int IdHistorico { get; set; }
         public int IdUsuarioCreacion { get; set; }
         public System.DateTime FechaCreacion { get; set; }
+        public System.DateTime FechaIniVig { get; set; }
+        public Nullable<System.DateTime> FechaFinVig { get; set; }
+        public int IdSubArea { get; set; }
     
-        public virtual TipoArea TipoArea { get; set; }
-        public virtual ICollection<AreaHist> AreaHist { get; set; }
-        public virtual ICollection<SubArea> SubArea { get; set; }
-        public virtual ICollection<Permiso> Permiso { get; set; }
+        public virtual Area Area { get; set; }
+        public virtual Usuario Usuario { get; set; }
     }
 }

@@ -23,6 +23,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
             this.Documento = new HashSet<Documento>();
             this.Seccion = new HashSet<Seccion>();
             this.Seccion1 = new HashSet<Seccion>();
+            this.Permiso = new HashSet<Permiso>();
         }
     
         public int IdUsuario { get; set; }
@@ -40,5 +41,6 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
         public virtual ICollection<Documento> Documento { get; set; }
         public virtual ICollection<Seccion> Seccion { get; set; }
         public virtual ICollection<Seccion> Seccion1 { get; set; }
+        public virtual ICollection<Permiso> Permiso { get; set; }
     }
 }
