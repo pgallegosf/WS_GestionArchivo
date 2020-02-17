@@ -8,7 +8,7 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
 {
     public class DSubArea
     {
-        public static IEnumerable<ESubArea> Listar(int idArea)
+        public static IEnumerable<ESubArea> Listar(int? idUsuario,int idArea)
         {
             var lista = new List<ESubArea>();
             using (var db = new OpeCarEntities())
@@ -52,6 +52,12 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                             };
                             lista.Add(result);
                         }
+                        if (idUsuario == null) return lista;
+                        var permisosIdSubArea =
+                    db.Permiso.Where(p => p.IdUsuario == idUsuario && p.FechaFinVig == null && p.IdRol == 1 && p.IdSubArea != 0)
+                        .Select(item => item.IdSubArea);
+                        lista.RemoveAll(x => permisosIdSubArea.Contains(x.Codigo));
+                        return lista;
                     }
                 }
                 catch (Exception ex)

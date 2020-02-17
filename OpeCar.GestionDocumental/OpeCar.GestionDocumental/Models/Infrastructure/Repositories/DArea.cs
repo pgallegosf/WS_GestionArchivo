@@ -9,13 +9,15 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
 {
     public class DArea
     {
-        public static IEnumerable<EArea> Listar(int idTipoArea)
+        public static IEnumerable<EArea> Listar(int? idUsuario,int idTipoArea)
         {
             var lista = new List<EArea>();
             using (var db = new OpeCarEntities())
             {
                 try
                 {
+                    
+
                     var query = (from a in db.Area
                         join ah in db.AreaHist
                             on a.IdArea equals ah.IdArea
@@ -46,6 +48,13 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                             };
                             lista.Add(result);
                         }
+                        if (idUsuario == null) return lista;
+                        var permisosIdArea =
+                            db.Permiso.Where(p => p.IdUsuario == idUsuario && p.FechaFinVig == null && p.IdRol == 1 && p.IdSubArea == 0)
+                                .Select(item => item.IdArea);
+                        lista.RemoveAll(x => permisosIdArea.Contains(x.IdArea));
+                        return lista;
+
                     }
                 }
                 catch (Exception ex)

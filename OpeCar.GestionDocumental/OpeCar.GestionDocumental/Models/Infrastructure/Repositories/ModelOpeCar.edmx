@@ -150,6 +150,24 @@
           <Property Name="IdUsuarioModificacion" Type="int" />
           <Property Name="FechaModificacion" Type="datetime" />
         </EntityType>
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdRol" />
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="IdHistorico" />
+            <PropertyRef Name="IdSubArea" />
+          </Key>
+          <Property Name="IdUsuario" Type="bigint" Nullable="false" />
+          <Property Name="IdRol" Type="tinyint" Nullable="false" />
+          <Property Name="IdArea" Type="int" Nullable="false" />
+          <Property Name="IdHistorico" Type="int" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="int" Nullable="false" />
+          <Property Name="FechaCreacion" Type="datetime" Nullable="false" />
+          <Property Name="FechaIniVig" Type="datetime" Nullable="false" />
+          <Property Name="FechaFinVig" Type="datetime" />
+          <Property Name="IdSubArea" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Usuario">
           <Key>
             <PropertyRef Name="IdUsuario" />
@@ -257,6 +275,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
         <Association Name="FK_MenuFooter_Mantenimiento">
           <End Role="Mantenimiento" Type="Self.Mantenimiento" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -268,6 +287,32 @@
             </Principal>
             <Dependent Role="MenuFooter">
               <PropertyRef Name="MantenimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+
+        <Association Name="FK_Permiso_Area">
+          <End Role="Area" Type="Self.Area" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Usuario">
+          <End Role="Usuario" Type="Self.Usuario" Multiplicity="1" />
+          <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="IdUsuario" />
+
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -381,6 +426,7 @@
           <EntitySet Name="TipoArea" EntityType="Self.TipoArea" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="TipoDocumento" EntityType="Self.TipoDocumento" Schema="gDocumental" store:Type="Tables" />
           <EntitySet Name="Enlace" EntityType="Self.Enlace" Schema="generalidades" store:Type="Tables" />
+          <EntitySet Name="Permiso" EntityType="Self.Permiso" Schema="seguridad" store:Type="Tables" />
           <EntitySet Name="Usuario" EntityType="Self.Usuario" Schema="seguridad" store:Type="Tables" />
           <AssociationSet Name="FK_Area_TipoArea" Association="Self.FK_Area_TipoArea">
             <End Role="TipoArea" EntitySet="TipoArea" />
@@ -414,9 +460,20 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoHist" EntitySet="DocumentoHist" />
           </AssociationSet>
+
           <AssociationSet Name="FK_MenuFooter_Mantenimiento" Association="Self.FK_MenuFooter_Mantenimiento">
             <End Role="Mantenimiento" EntitySet="Mantenimiento" />
             <End Role="MenuFooter" EntitySet="MenuFooter" />
+          </AssociationSet>
+
+          <AssociationSet Name="FK_Permiso_Area" Association="Self.FK_Permiso_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Permiso" EntitySet="Permiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Usuario" Association="Self.FK_Permiso_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Permiso" EntitySet="Permiso" />
+
           </AssociationSet>
           <AssociationSet Name="FK_Seccion_TipoSeccion" Association="Self.FK_Seccion_TipoSeccion">
             <End Role="TipoSeccion" EntitySet="TipoSeccion" />
@@ -536,6 +593,7 @@
           <Property Name="IndicadorSistema" Type="Boolean" />
           <NavigationProperty Name="Seccion" Relationship="OpeCarModel.FK_Seccion_Usuario" FromRole="Usuario" ToRole="Seccion" />
           <NavigationProperty Name="Seccion1" Relationship="OpeCarModel.FK_Seccion_Usuario1" FromRole="Usuario" ToRole="Seccion" />
+          <NavigationProperty Name="Permiso" Relationship="OpeCarModel.FK_Permiso_Usuario" FromRole="Usuario" ToRole="Permiso" />
           </EntityType>
         <Association Name="FK_AreaHist_Usuario">
           <End Role="Usuario" Type="Self.Usuario" Multiplicity="0..1" />
@@ -666,11 +724,23 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Seccion" EntitySet="Seccion" />
           </AssociationSet>
+
           <EntitySet Name="Mantenimiento" EntityType="OpeCarModel.Mantenimiento" />
           <EntitySet Name="MenuFooter" EntityType="OpeCarModel.MenuFooter" />
           <AssociationSet Name="FK_MenuFooter_Mantenimiento" Association="OpeCarModel.FK_MenuFooter_Mantenimiento">
             <End Role="Mantenimiento" EntitySet="Mantenimiento" />
             <End Role="MenuFooter" EntitySet="MenuFooter" />
+          </AssociationSet>
+
+          <EntitySet Name="Permiso" EntityType="OpeCarModel.Permiso" />
+          <AssociationSet Name="FK_Permiso_Area" Association="OpeCarModel.FK_Permiso_Area">
+            <End Role="Area" EntitySet="Area" />
+            <End Role="Permiso" EntitySet="Permiso" />
+          </AssociationSet>
+          <AssociationSet Name="FK_Permiso_Usuario" Association="OpeCarModel.FK_Permiso_Usuario">
+            <End Role="Usuario" EntitySet="Usuario" />
+            <End Role="Permiso" EntitySet="Permiso" />
+
           </AssociationSet>
           </EntityContainer>
         <EntityType Name="SubArea">
@@ -723,6 +793,7 @@
           <NavigationProperty Name="TipoArea" Relationship="OpeCarModel.FK_Area_TipoArea" FromRole="Area" ToRole="TipoArea" />
           <NavigationProperty Name="AreaHist" Relationship="OpeCarModel.FK_AreaHist_Area" FromRole="Area" ToRole="AreaHist" />
           <NavigationProperty Name="SubArea" Relationship="OpeCarModel.FK_SubArea_Area" FromRole="Area" ToRole="SubArea" />
+          <NavigationProperty Name="Permiso" Relationship="OpeCarModel.FK_Permiso_Area" FromRole="Area" ToRole="Permiso" />
         </EntityType>
         <EntityType Name="Documento">
           <Key>
@@ -913,6 +984,7 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+
         <EntityType Name="Mantenimiento">
           <Key>
             <PropertyRef Name="MantenimientoId" />
@@ -950,6 +1022,52 @@
             </Principal>
             <Dependent Role="MenuFooter">
               <PropertyRef Name="MantenimientoId" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+
+        <EntityType Name="Permiso">
+          <Key>
+            <PropertyRef Name="IdUsuario" />
+            <PropertyRef Name="IdRol" />
+            <PropertyRef Name="IdArea" />
+            <PropertyRef Name="IdHistorico" />
+            <PropertyRef Name="IdSubArea" />
+          </Key>
+          <Property Name="IdUsuario" Type="Int32" Nullable="false" />
+          <Property Name="IdRol" Type="Byte" Nullable="false" />
+          <Property Name="IdArea" Type="Int32" Nullable="false" />
+          <Property Name="IdHistorico" Type="Int32" Nullable="false" />
+          <Property Name="IdUsuarioCreacion" Type="Int32" Nullable="false" />
+          <Property Name="FechaCreacion" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaIniVig" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="FechaFinVig" Type="DateTime" Precision="3" />
+          <Property Name="IdSubArea" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Area" Relationship="OpeCarModel.FK_Permiso_Area" FromRole="Permiso" ToRole="Area" />
+          <NavigationProperty Name="Usuario" Relationship="OpeCarModel.FK_Permiso_Usuario" FromRole="Permiso" ToRole="Usuario" />
+        </EntityType>
+        <Association Name="FK_Permiso_Area">
+          <End Type="OpeCarModel.Area" Role="Area" Multiplicity="1" />
+          <End Type="OpeCarModel.Permiso" Role="Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Area">
+              <PropertyRef Name="IdArea" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="IdArea" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_Permiso_Usuario">
+          <End Type="OpeCarModel.Usuario" Role="Usuario" Multiplicity="1" />
+          <End Type="OpeCarModel.Permiso" Role="Permiso" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Usuario">
+              <PropertyRef Name="IdUsuario" />
+            </Principal>
+            <Dependent Role="Permiso">
+              <PropertyRef Name="IdUsuario" />
+
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -1099,6 +1217,7 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
           <EntitySetMapping Name="Mantenimiento">
             <EntityTypeMapping TypeName="OpeCarModel.Mantenimiento">
               <MappingFragment StoreEntitySet="Mantenimiento">
@@ -1125,6 +1244,23 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
+
+          <EntitySetMapping Name="Permiso">
+            <EntityTypeMapping TypeName="OpeCarModel.Permiso">
+              <MappingFragment StoreEntitySet="Permiso">
+                <ScalarProperty Name="IdSubArea" ColumnName="IdSubArea" />
+                <ScalarProperty Name="FechaFinVig" ColumnName="FechaFinVig" />
+                <ScalarProperty Name="FechaIniVig" ColumnName="FechaIniVig" />
+                <ScalarProperty Name="FechaCreacion" ColumnName="FechaCreacion" />
+                <ScalarProperty Name="IdUsuarioCreacion" ColumnName="IdUsuarioCreacion" />
+                <ScalarProperty Name="IdHistorico" ColumnName="IdHistorico" />
+                <ScalarProperty Name="IdArea" ColumnName="IdArea" />
+                <ScalarProperty Name="IdRol" ColumnName="IdRol" />
+                <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
+
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
         </EntityContainerMapping>
       </Mapping>
     </edmx:Mappings>
@@ -1139,8 +1275,8 @@
     <Options>
       <DesignerInfoPropertySet>
         <DesignerProperty Name="ValidateOnBuild" Value="true" />
-        <DesignerProperty Name="EnablePluralization" Value="false" />
-        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="True" />
         <DesignerProperty Name="UseLegacyProvider" Value="true" />
         <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
       </DesignerInfoPropertySet>
