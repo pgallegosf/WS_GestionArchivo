@@ -189,13 +189,13 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                     {
                         subArea.IndicadorHabilitado = false;
                         subArea.IdUsuarioModificacion = request.IdUsuario;
-                        subArea.FechaModificacion = request.FechaTransaccion;
+                        subArea.FechaModificacion = request.FechaTransaccion;                        
                     }
                     idHistorico+=1;
                     var subAreaHist = new SubAreaHist
                     {
 
-                        IdSubArea = (int)request.Codigo,
+                        IdSubArea = (int)request.Codigo,                        
                         IdHistorial = idHistorico,
                         Descripcion = request.Descripcion,
                         FechaModificacion = request.FechaTransaccion,
@@ -211,6 +211,39 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
                 catch (Exception ex)
                 {
 
+                    throw ex;
+                    return false;
+                }
+
+            }
+        }
+
+        public static bool Mover(ESubAreaRequest request)
+        {
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var subArea = db.SubArea.FirstOrDefault(x => x.IdSubArea == request.Codigo);
+                    if (subArea != null)
+                    {
+                        subArea.IdArea = request.IdArea;
+                        subArea.IdPadre = request.IdPadre;
+                    }
+                    var subAreas = db.SubArea.Where(x => x.IdPadre == request.Codigo);
+                    if (subAreas.Count() > 0)
+                    {
+                        foreach (var item in subAreas)
+                        {
+                            item.IdArea = request.IdArea;
+                            item.IdPadre = request.Codigo;
+                        }
+                    }
+                    db.SaveChanges();
+                    return true;
+                }
+                catch (Exception ex)
+                {
                     throw ex;
                     return false;
                 }
