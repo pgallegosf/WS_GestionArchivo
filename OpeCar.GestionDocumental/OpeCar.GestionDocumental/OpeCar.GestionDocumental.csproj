@@ -124,6 +124,7 @@
     <Compile Include="Controllers\AreaController.cs" />
     <Compile Include="Controllers\DocumentoController.cs" />
     <Compile Include="Controllers\EnlaceController.cs" />
+    <Compile Include="Controllers\LogController.cs" />
     <Compile Include="Controllers\MantenimientoController.cs" />
     <Compile Include="Controllers\SeccionController.cs" />
     <Compile Include="Controllers\SubAreaController.cs" />
@@ -137,6 +138,8 @@
     <Compile Include="Models\Entities\EDocumentoRequest.cs" />
     <Compile Include="Models\Entities\EEnlace.cs" />
     <Compile Include="Models\Entities\EEnlaceRequest.cs" />
+    <Compile Include="Models\Entities\ELog.cs" />
+    <Compile Include="Models\Entities\ELogRequest.cs" />
     <Compile Include="Models\Entities\EMantenimiento.cs" />
     <Compile Include="Models\Entities\EMenuFooter.cs" />
     <Compile Include="Models\Entities\ESeccion.cs" />
@@ -152,6 +155,7 @@
     <Compile Include="Models\Infrastructure\Repositories\DArea.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DDocumento.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DEnlace.cs" />
+    <Compile Include="Models\Infrastructure\Repositories\DLog.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DMantenimiento.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DMenuFooter.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Documento.cs">
@@ -163,6 +167,9 @@
     <Compile Include="Models\Infrastructure\Repositories\DSeccion.cs" />
     <Compile Include="Models\Infrastructure\Repositories\DSubArea.cs" />
     <Compile Include="Models\Infrastructure\Repositories\Enlace.cs">
+      <DependentUpon>ModelOpeCar.tt</DependentUpon>
+    </Compile>
+    <Compile Include="Models\Infrastructure\Repositories\Log.cs">
       <DependentUpon>ModelOpeCar.tt</DependentUpon>
     </Compile>
     <Compile Include="Models\Infrastructure\Repositories\Mantenimiento.cs">

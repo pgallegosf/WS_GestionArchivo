@@ -12,19 +12,14 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
     using System;
     using System.Collections.Generic;
     
-    public partial class Permiso
+    public partial class Log
     {
-        public int IdUsuario { get; set; }
-        public byte IdRol { get; set; }
-        public int IdArea { get; set; }
-        public int IdHistorico { get; set; }
-        public int IdUsuarioCreacion { get; set; }
-        public System.DateTime FechaCreacion { get; set; }
-        public System.DateTime FechaIniVig { get; set; }
-        public Nullable<System.DateTime> FechaFinVig { get; set; }
-        public int IdSubArea { get; set; }
-    
-        public virtual Area Area { get; set; }
-        public virtual Usuario Usuario { get; set; }
+        public long IDLog { get; set; }
+        public string Usuario { get; set; }
+        public string TipoLog { get; set; }
+        public string Funcion { get; set; }
+        public string RegistroLog { get; set; }
+        public string RequestLog { get; set; }
+        public System.DateTime FechaLog { get; set; }
     }
 }

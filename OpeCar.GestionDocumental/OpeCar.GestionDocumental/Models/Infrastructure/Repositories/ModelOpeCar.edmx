@@ -5,6 +5,18 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="OpeCarModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2005" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="IDLog" />
+          </Key>
+          <Property Name="IDLog" Type="bigint" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Usuario" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="TipoLog" Type="nvarchar" MaxLength="50" />
+          <Property Name="Funcion" Type="nvarchar" MaxLength="100" />
+          <Property Name="RegistroLog" Type="text" />
+          <Property Name="RequestLog" Type="text" />
+          <Property Name="FechaLog" Type="datetime" Nullable="false" />
+        </EntityType>
         <EntityType Name="Mantenimiento">
           <Key>
             <PropertyRef Name="MantenimientoId" />
@@ -275,7 +287,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
         <Association Name="FK_MenuFooter_Mantenimiento">
           <End Role="Mantenimiento" Type="Self.Mantenimiento" Multiplicity="1">
             <OnDelete Action="Cascade" />
@@ -290,7 +301,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-
         <Association Name="FK_Permiso_Area">
           <End Role="Area" Type="Self.Area" Multiplicity="1" />
           <End Role="Permiso" Type="Self.Permiso" Multiplicity="*" />
@@ -312,7 +322,6 @@
             </Principal>
             <Dependent Role="Permiso">
               <PropertyRef Name="IdUsuario" />
-
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -413,6 +422,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="OpeCarModelStoreContainer">
+          <EntitySet Name="Log" EntityType="Self.Log" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Mantenimiento" EntityType="Self.Mantenimiento" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="MenuFooter" EntityType="Self.MenuFooter" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Seccion" EntityType="Self.Seccion" Schema="dbo" store:Type="Tables" />
@@ -460,12 +470,10 @@
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="DocumentoHist" EntitySet="DocumentoHist" />
           </AssociationSet>
-
           <AssociationSet Name="FK_MenuFooter_Mantenimiento" Association="Self.FK_MenuFooter_Mantenimiento">
             <End Role="Mantenimiento" EntitySet="Mantenimiento" />
             <End Role="MenuFooter" EntitySet="MenuFooter" />
           </AssociationSet>
-
           <AssociationSet Name="FK_Permiso_Area" Association="Self.FK_Permiso_Area">
             <End Role="Area" EntitySet="Area" />
             <End Role="Permiso" EntitySet="Permiso" />
@@ -473,7 +481,6 @@
           <AssociationSet Name="FK_Permiso_Usuario" Association="Self.FK_Permiso_Usuario">
             <End Role="Usuario" EntitySet="Usuario" />
             <End Role="Permiso" EntitySet="Permiso" />
-
           </AssociationSet>
           <AssociationSet Name="FK_Seccion_TipoSeccion" Association="Self.FK_Seccion_TipoSeccion">
             <End Role="TipoSeccion" EntitySet="TipoSeccion" />
@@ -742,6 +749,7 @@
             <End Role="Permiso" EntitySet="Permiso" />
 
           </AssociationSet>
+          <EntitySet Name="Log" EntityType="OpeCarModel.Log" />
           </EntityContainer>
         <EntityType Name="SubArea">
           <Key>
@@ -1071,6 +1079,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <EntityType Name="Log">
+          <Key>
+            <PropertyRef Name="IDLog" />
+          </Key>
+          <Property Name="IDLog" Type="Int64" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Usuario" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+          <Property Name="TipoLog" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Funcion" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+          <Property Name="RegistroLog" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="RequestLog" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+          <Property Name="FechaLog" Type="DateTime" Precision="3" Nullable="false" />
+        </EntityType>
         </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -1258,6 +1278,19 @@
                 <ScalarProperty Name="IdRol" ColumnName="IdRol" />
                 <ScalarProperty Name="IdUsuario" ColumnName="IdUsuario" />
 
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Log">
+            <EntityTypeMapping TypeName="OpeCarModel.Log">
+              <MappingFragment StoreEntitySet="Log">
+                <ScalarProperty Name="FechaLog" ColumnName="FechaLog" />
+                <ScalarProperty Name="RequestLog" ColumnName="RequestLog" />
+                <ScalarProperty Name="RegistroLog" ColumnName="RegistroLog" />
+                <ScalarProperty Name="Funcion" ColumnName="Funcion" />
+                <ScalarProperty Name="TipoLog" ColumnName="TipoLog" />
+                <ScalarProperty Name="Usuario" ColumnName="Usuario" />
+                <ScalarProperty Name="IDLog" ColumnName="IDLog" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>

@@ -40,6 +40,7 @@
         <EntityTypeShape EntityType="OpeCarModel.Permiso" Width="1.5" PointX="6" PointY="12.625" />
         <AssociationConnector Association="OpeCarModel.FK_Permiso_Area" />
         <AssociationConnector Association="OpeCarModel.FK_Permiso_Usuario" />
+        <EntityTypeShape EntityType="OpeCarModel.Log" Width="1.5" PointX="5.375" PointY="4.75" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
