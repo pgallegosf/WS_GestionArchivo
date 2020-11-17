@@ -33,5 +33,21 @@ namespace OpeCar.GestionDocumental.Controllers
             var resul = DDocumento.Eliminar(idDocumento);
             return Ok(resul);
         }
+
+        [HttpPost]
+        [Route("api/Documento/Mover")]
+        public IHttpActionResult Mover([FromBody] EDocumentoRequest request)
+        {
+            var resul = DDocumento.Mover(request);
+            return Ok(resul);
+        }
+
+        [HttpPost]
+        [Route("api/Documento/Buscar")]
+        public IHttpActionResult Buscar([FromBody] EDocumentoRequest request)
+        {
+            var resul = DDocumento.Buscar(request);
+            return Ok(resul);
+        }
     }
 }

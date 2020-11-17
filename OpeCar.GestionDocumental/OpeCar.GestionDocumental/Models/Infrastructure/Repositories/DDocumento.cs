@@ -157,5 +157,77 @@ namespace OpeCar.GestionDocumental.Models.Infrastructure.Repositories
 
             }
         }
+
+        public static bool Mover(EDocumentoRequest request)
+        {
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var documento = db.Documento.FirstOrDefault(x => x.IdDocumento == request.Codigo);
+                    documento.IdSubArea = request.IdSubArea;
+                    db.SaveChanges();
+                    return true;
+                }
+                catch(Exception e)
+                {
+                    return false;
+                }
+            }
+        }
+
+        public static IEnumerable<EDocumento> Buscar(EDocumentoRequest request)
+        {
+            var lista = new List<EDocumento>();
+            using (var db = new OpeCarEntities())
+            {
+                try
+                {
+                    var query = (from d in db.Documento
+                                 join dh in db.DocumentoHist
+                                     on d.IdDocumento equals dh.IdDocumento
+                                 join s in db.SubArea
+                                 on d.IdSubArea equals s.IdSubArea
+                                 orderby dh.IdHistorico descending
+                                 where (dh.NombreDocumento.Contains(request.Descripcion)
+                                 //&& dh.IndicadorHabilitado
+                                 && dh.IdHistorico == db.DocumentoHist.Where(x => x.IdDocumento == d.IdDocumento).Max(x => x.IdHistorico))
+                                 select new
+                                 {
+                                     d.IdSubArea,
+                                     d.IdDocumento,
+                                     d.IdTipoDocumento,
+                                     dh.NombreDocumento,
+                                     dh.UrlDocumento,
+                                     dh.IndicadorHabilitado,
+                                     dh.IdHistorico
+                                 }).Take(10);
+
+                    {
+                        foreach (var item in query.Where(x => x.IndicadorHabilitado))
+                        {
+                            var result = new EDocumento
+                            {
+                                IdSubArea = item.IdSubArea,
+                                Codigo = item.IdDocumento,
+                                Descripcion = item.NombreDocumento,
+                                IdTipoDocumento = item.IdTipoDocumento,
+                                UrlDocumento = item.UrlDocumento,
+                                IndicadorHabilitado = item.IndicadorHabilitado,
+                                IdHistorico = item.IdHistorico
+                            };
+                            lista.Add(result);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
+
+                    throw ex;
+                }
+
+            }
+            return lista.OrderBy(x => x.Descripcion);
+        }
     }
 }
